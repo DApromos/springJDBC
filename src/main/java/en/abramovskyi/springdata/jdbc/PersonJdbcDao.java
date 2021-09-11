@@ -17,6 +17,19 @@ public class PersonJdbcDao {
     public List<Person> findAll(){
         List<Person> people = jdbcTemplate.query("select * from jpa.person",
                 new BeanPropertyRowMapper<>(Person.class));
+
+        return people;
+    }
+
+    public int insert(Person person){
+        return jdbcTemplate.update("insert into jpa.person " +
+                "(id, first_name, last_name, address) " +
+                "values (?, ?, ?, ?)",
+        new Object[]{
+                person.getId(), person.getFirstName(),
+                person.getLastName(), person.getAddress()
+        });
+
     }
 
 }
